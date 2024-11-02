@@ -1,0 +1,69 @@
+﻿@model IEnumerable<Hospital_Appointment.Models.tblRole>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CanCreate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CanRead)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CanUpdate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CanDelete)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Receptionist)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Doctor)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CanCreate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CanRead)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CanUpdate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CanDelete)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Receptionist)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Doctor)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.RoleID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.RoleID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.RoleID })
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,148 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="APPIONTMENTDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="tblAdmin">
+    <Key>
+      <PropertyRef Name="AdminID" />
+    </Key>
+    <Property Name="AdminID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="RoleID" Type="Int32" />
+    <NavigationProperty Name="tblRole" Relationship="Self.FK_tblAdmin_tblRole" FromRole="tblAdmin" ToRole="tblRole" />
+    <NavigationProperty Name="tblSchedules" Relationship="Self.FK_tblSchedule_tblAdmin" FromRole="tblAdmin" ToRole="tblSchedule" />
+  </EntityType>
+  <EntityType Name="tblAppointment">
+    <Key>
+      <PropertyRef Name="AppointmentID" />
+    </Key>
+    <Property Name="AppointmentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Date" Type="DateTime" Precision="0" />
+    <Property Name="Time" Type="Time" Precision="7" />
+    <Property Name="Duration" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Pending" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Confirmed" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Cancelled" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="PaymentID" Type="Int32" />
+    <NavigationProperty Name="tblPayment" Relationship="Self.FK_tblAppointment_tblPayment" FromRole="tblAppointment" ToRole="tblPayment" />
+  </EntityType>
+  <EntityType Name="tblPayment">
+    <Key>
+      <PropertyRef Name="PaymentID" />
+    </Key>
+    <Property Name="PaymentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Amount" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="PaymentMethod" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="UserID" Type="Int32" />
+    <NavigationProperty Name="tblAppointments" Relationship="Self.FK_tblAppointment_tblPayment" FromRole="tblPayment" ToRole="tblAppointment" />
+    <NavigationProperty Name="tblUser" Relationship="Self.FK_tblPayment_tblUser" FromRole="tblPayment" ToRole="tblUser" />
+  </EntityType>
+  <EntityType Name="tblRole">
+    <Key>
+      <PropertyRef Name="RoleID" />
+    </Key>
+    <Property Name="RoleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CanCreate" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CanRead" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CanUpdate" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CanDelete" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Receptionist" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="Doctor" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <NavigationProperty Name="tblAdmins" Relationship="Self.FK_tblAdmin_tblRole" FromRole="tblRole" ToRole="tblAdmin" />
+  </EntityType>
+  <EntityType Name="tblSchedule">
+    <Key>
+      <PropertyRef Name="ScheduleID" />
+    </Key>
+    <Property Name="ScheduleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Date" Type="DateTime" Precision="0" />
+    <Property Name="AvailableTime" Type="Time" Precision="7" />
+    <Property Name="AdminID" Type="Int32" />
+    <NavigationProperty Name="tblAdmin" Relationship="Self.FK_tblSchedule_tblAdmin" FromRole="tblSchedule" ToRole="tblAdmin" />
+  </EntityType>
+  <EntityType Name="tblUser">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="MedicalHistory" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="tblPayments" Relationship="Self.FK_tblPayment_tblUser" FromRole="tblUser" ToRole="tblPayment" />
+  </EntityType>
+  <Association Name="FK_tblAdmin_tblRole">
+    <End Role="tblRole" Type="Self.tblRole" Multiplicity="0..1" />
+    <End Role="tblAdmin" Type="Self.tblAdmin" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblRole">
+        <PropertyRef Name="RoleID" />
+      </Principal>
+      <Dependent Role="tblAdmin">
+        <PropertyRef Name="RoleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblSchedule_tblAdmin">
+    <End Role="tblAdmin" Type="Self.tblAdmin" Multiplicity="0..1" />
+    <End Role="tblSchedule" Type="Self.tblSchedule" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblAdmin">
+        <PropertyRef Name="AdminID" />
+      </Principal>
+      <Dependent Role="tblSchedule">
+        <PropertyRef Name="AdminID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblAppointment_tblPayment">
+    <End Role="tblPayment" Type="Self.tblPayment" Multiplicity="0..1" />
+    <End Role="tblAppointment" Type="Self.tblAppointment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblPayment">
+        <PropertyRef Name="PaymentID" />
+      </Principal>
+      <Dependent Role="tblAppointment">
+        <PropertyRef Name="PaymentID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblPayment_tblUser">
+    <End Role="tblUser" Type="Self.tblUser" Multiplicity="0..1" />
+    <End Role="tblPayment" Type="Self.tblPayment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblUser">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="tblPayment">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="APPIONTMENTDBEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="tblAdmins" EntityType="Self.tblAdmin" />
+    <EntitySet Name="tblAppointments" EntityType="Self.tblAppointment" />
+    <EntitySet Name="tblPayments" EntityType="Self.tblPayment" />
+    <EntitySet Name="tblRoles" EntityType="Self.tblRole" />
+    <EntitySet Name="tblSchedules" EntityType="Self.tblSchedule" />
+    <EntitySet Name="tblUsers" EntityType="Self.tblUser" />
+    <AssociationSet Name="FK_tblAdmin_tblRole" Association="Self.FK_tblAdmin_tblRole">
+      <End Role="tblRole" EntitySet="tblRoles" />
+      <End Role="tblAdmin" EntitySet="tblAdmins" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblSchedule_tblAdmin" Association="Self.FK_tblSchedule_tblAdmin">
+      <End Role="tblAdmin" EntitySet="tblAdmins" />
+      <End Role="tblSchedule" EntitySet="tblSchedules" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblAppointment_tblPayment" Association="Self.FK_tblAppointment_tblPayment">
+      <End Role="tblPayment" EntitySet="tblPayments" />
+      <End Role="tblAppointment" EntitySet="tblAppointments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblPayment_tblUser" Association="Self.FK_tblPayment_tblUser">
+      <End Role="tblUser" EntitySet="tblUsers" />
+      <End Role="tblPayment" EntitySet="tblPayments" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

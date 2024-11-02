@@ -1,0 +1,74 @@
+﻿@model Hospital_Appointment.Models.tblRole
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>tblRole</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CanCreate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CanCreate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CanRead)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CanRead)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CanUpdate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CanUpdate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CanDelete)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CanDelete)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Receptionist)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Receptionist)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Doctor)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Doctor)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.RoleID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
