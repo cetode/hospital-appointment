@@ -66,6 +66,7 @@ namespace Hospital_Appointment.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
+            Console.WriteLine("Larry made a change here");
             return View();
         }
 
